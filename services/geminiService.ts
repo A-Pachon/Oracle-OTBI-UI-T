@@ -1,5 +1,7 @@
 import { GoogleGenAI } from "@google/genai";
 
+declare const process: any;
+
 const getClient = () => {
     // Safety check: process might not be defined in browser environment
     // Note: The environment variable is expected to be injected by the build system or runtime.
@@ -30,7 +32,8 @@ export const generateSqlFromPrompt = async (
       Return ONLY the SQL query. Do not include markdown formatting like \`\`\`sql. Do not include explanations.`,
     });
     
-    return response.text.trim().replace(/^```sql/, '').replace(/```$/, '').trim();
+    const text = response.text || '';
+    return text.trim().replace(/^```sql/, '').replace(/```$/, '').trim();
   } catch (error) {
     console.error("Gemini API Error:", error);
     throw error;
@@ -50,7 +53,7 @@ export const explainError = async (errorMessage: string, query: string): Promise
             
             Explain briefly what went wrong and suggest a fix.`
         });
-        return response.text;
+        return response.text || "No explanation returned.";
     } catch (error) {
         return "Could not generate explanation.";
     }
