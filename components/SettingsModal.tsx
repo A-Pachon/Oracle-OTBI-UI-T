@@ -269,7 +269,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
                                 onChange={(e) => setGoogleClientId(e.target.value)}
                             />
                             <p className="text-[10px] text-gray-500 mt-1">
-                                Required: Create an OAuth Client ID in Google Cloud Console > APIs > Credentials. 
+                                Required: Create an OAuth Client ID in Google Cloud Console &gt; APIs &gt; Credentials. 
                                 Add <code>{window.location.origin}</code> to Authorized JavaScript origins.
                             </p>
                         </div>
