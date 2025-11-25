@@ -39,7 +39,7 @@ const saveToDisk = async () => {
 };
 
 const loadFromDisk = async (): Promise<Uint8Array | null> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     const request = indexedDB.open(DB_NAME, 1);
     
     request.onupgradeneeded = (event: any) => {
