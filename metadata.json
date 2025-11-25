@@ -1,0 +1,5 @@
+{
+  "name": "Oracle OTBI UI",
+  "description": "SQL interface for querying Oracle BI Publisher services via SOAP.",
+  "requestFramePermissions": []
+}

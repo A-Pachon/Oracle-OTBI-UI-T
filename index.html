@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Oracle OTBI UI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- PrismJS for SQL Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js"></script>
+
+    <!-- SheetJS for real Excel export -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+    
+    <!-- SQL Formatter -->
+    <script src="https://unpkg.com/sql-formatter@15.0.0/dist/sql-formatter.min.js"></script>
+
+    <!-- SQL.js (SQLite for Browser) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js"></script>
+
+    <!-- Google Identity Services (for Drive Sync) -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+    <style>
+      /* Custom scrollbar for a darker, sleeker look */
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #1e1e1e;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 5px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #444;
+      }
+      
+      /* SQL Editor Overlay Styles */
+      .editor-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background-color: #1e1e1e; /* Base background */
+      }
+      
+      /* Shared styles for all three layers: Highlights, Syntax, Input */
+      .editor-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+        padding-left: 3.5rem; /* Space for line numbers */
+        margin: 0;
+        border: 0;
+        font-family: 'Fira Code', 'Consolas', monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        tab-size: 2;
+        overflow: auto;
+        white-space: pre;
+        word-wrap: normal;
+        box-sizing: border-box;
+      }
+
+      /* Layer 1: Background Highlights (Search/Selection) */
+      .editor-highlights {
+        z-index: 1;
+        color: transparent;
+        background: transparent;
+        pointer-events: none;
+      }
+      .highlight-match {
+        background-color: rgba(234, 179, 8, 0.4); /* Yellow */
+        border-radius: 2px;
+      }
+      .highlight-selection {
+        background-color: rgba(255, 255, 255, 0.15); /* Subtle White/Gray */
+        border-radius: 2px;
+        box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+      }
+
+      /* Layer 2: Prism Syntax Highlighting */
+      .editor-pre {
+        z-index: 2;
+        pointer-events: none;
+        background-color: transparent !important; /* Transparent to show highlights behind */
+      }
+
+      /* Layer 3: User Input */
+      .editor-textarea {
+        z-index: 3;
+        color: transparent;
+        background: transparent;
+        caret-color: #eab308;
+        resize: none;
+        outline: none;
+      }
+
+      .line-numbers {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 3rem;
+        height: 100%;
+        padding: 1rem 0.5rem;
+        background-color: #252525;
+        color: #666;
+        text-align: right;
+        font-family: 'Fira Code', 'Consolas', monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        user-select: none;
+        overflow: hidden;
+        border-right: 1px solid #333;
+        z-index: 10;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/client": "https://aistudiocdn.com/react-dom@^19.2.0/client",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-neutral-900 text-gray-100 overflow-hidden">
+    <div id="root"></div>
+  </body>
+</html>
